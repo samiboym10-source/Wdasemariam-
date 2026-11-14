@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="sv"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ውዳሴ ማርያም</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Ethiopic:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#faf6ee;--fg:#2a2118;--card:#fff;--ac:#8a2f1b;--mu:#7a6f62;--bd:#e4dac8;--hl:#ffe58a;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#1c1915;--fg:#f1e9dc;--card:#2a251f;--ac:#e8896f;--mu:#a89c8c;--bd:#3d362d;--hl:#6b5a14}}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.5 system-ui,"Noto Sans Ethiopic",sans-serif}
+.ge{font-family:"Noto Sans Ethiopic",system-ui,sans-serif}
+#app{max-width:720px;margin:auto;padding:0 14px 90px}
+header{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);display:flex;align-items:center;gap:8px;padding:12px 0;z-index:5;border-bottom:1px solid var(--bd)}
+header h1{flex:1;font-size:1.15rem;margin:0}
+button,input,textarea,select{font:inherit;color:inherit}
+button{background:var(--ac);color:#fff;border:0;border-radius:12px;padding:10px 16px;cursor:pointer;min-height:44px}
+button.g{background:transparent;color:var(--fg);border:1px solid var(--bd)}
+button.i{background:transparent;color:var(--fg);padding:8px 12px;font-size:1.3rem}
+input,textarea,select{width:100%;padding:12px;border:1px solid var(--bd);border-radius:12px;background:var(--card);margin:6px 0}
+.item{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px;margin:10px 0;cursor:pointer;font-size:1.1rem}
+.item span.n{flex:1}.sub{color:var(--mu);font-size:.85rem}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px;margin:12px 0}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+#body{font-size:1.35rem;line-height:1.9;white-space:pre-wrap}
+#body p{margin:0}#body p.mk{border-left:5px solid var(--ac);padding-left:8px;background:color-mix(in srgb,var(--ac) 10%,transparent)}
+#body p.pl{outline:2px dashed var(--mu)}#body p.hl{background:var(--hl)}
+.menu{position:fixed;right:12px;top:calc(56px + env(safe-area-inset-top,0px));background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:6px;z-index:9;min-width:210px;box-shadow:0 6px 24px #0004}
+.menu button{display:block;width:100%;text-align:left;background:none;color:var(--fg)}
+.login{margin-top:12vh;text-align:center}.login h2{font-size:1.6rem}
+.tag{font-size:.8rem;background:var(--bd);border-radius:8px;padding:2px 8px}
+.sheet{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px;z-index:9;box-shadow:0 6px 24px #0004}
+.toast{position:fixed;bottom:calc(20px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:10px 18px;border-radius:20px;z-index:20}
+</style></head><body><div id="app"></div>
+<script>window.FBREADY=new Promise(r=>{window._fbres=r})</script>
+<script type="module">
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import{getAuth,signInWithEmailAndPassword,signOut,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import{getFirestore,collection,doc,onSnapshot,addDoc,setDoc,updateDoc,deleteDoc,getDoc}from"https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+try{
+const app=initializeApp({apiKey:"AIzaSyCGjhzb8MZawU5X9wMIsibCSziBhv3iT_Q",authDomain:"wdase-mariam-e4a6e.firebaseapp.com",projectId:"wdase-mariam-e4a6e",storageBucket:"wdase-mariam-e4a6e.firebasestorage.app",messagingSenderId:"638279695275",appId:"1:638279695275:web:00f611add85dcac6bf30ee"});
+const auth=getAuth(app),fs=getFirestore(app);
+const first=new Promise(r=>{const un=onAuthStateChanged(auth,u=>{un();r(u)})});
+const db={collection:n=>({onSnapshot:(cb,er)=>onSnapshot(collection(fs,n),s=>cb({docs:s.docs.map(d=>({id:d.id,data:()=>d.data()}))}),er),add:d=>addDoc(collection(fs,n),d),doc:id=>({set:d=>setDoc(doc(fs,n,id),d),update:d=>updateDoc(doc(fs,n,id),d),delete:()=>deleteDoc(doc(fs,n,id)),get:async()=>{const x=await getDoc(doc(fs,n,id));return{data:()=>x.data()}}})})};
+const b64=b=>new Promise((r,j)=>{const f=new FileReader();f.onload=()=>r(f.result.split(",")[1]);f.onerror=j;f.readAsDataURL(b)});
+const shrink=b=>new Promise((r,j)=>{const im=new Image();im.onload=()=>{const k=Math.min(1,900/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=im.width*k;c.height=im.height*k;c.getContext("2d").drawImage(im,0,0,c.width,c.height);r(c.toDataURL("image/jpeg",.6))};im.onerror=j;im.src=URL.createObjectURL(b)});
+const assets={upload:async b=>{if((b.type||"").startsWith("image/"))return{url:await shrink(b)};const id="a"+Date.now().toString(36)+Math.random().toString(36).slice(2,6),t=await b64(b),ps=t.match(/.{1,600000}/g)||[];if(ps.length>8)throw new Error("För lång inspelning (max ca 10 min)");for(let i=0;i<ps.length;i++)await setDoc(doc(fs,"aud",id+"_"+i),{d:ps[i]});return{url:"fs:"+id+":"+ps.length+":"+(b.type||"audio/webm").split(";")[0]}}};
+window._fbres({db,assets,user:()=>first,signIn:(e,p)=>signInWithEmailAndPassword(auth,e,p),signOut:()=>signOut(auth)});
+}catch(e){console.error(e);window._fbres(null)}
+</script>
+<script>
+const L={sv:{login:"Logga in",pw:"Lösenord",name:"Namn",phone:"Telefonnummer",home:"Grupper",empty:"Inget här ännu.",set:"Inställningar",lang:"Språk",notif:"Notiser",prof:"Profil",out:"Logga ut",slow:"🐢 Segt",norm:"⚡ Normalt",rec:"Spela in",stop:"Stoppa",send:"Skicka till admin",msg:"Skriv till admin",call:"Ring admin",share:"Dela",subs:"Inskickat",wrong:"Fel lösenord"},
+en:{login:"Log in",pw:"Password",name:"Name",phone:"Phone number",home:"Groups",empty:"Nothing here yet.",set:"Settings",lang:"Language",notif:"Notifications",prof:"Profile",out:"Log out",slow:"🐢 Slow",norm:"⚡ Normal",rec:"Record",stop:"Stop",send:"Send to admin",msg:"Message admin",call:"Call admin",share:"Share",subs:"Submissions",wrong:"Wrong password"},
+am:{login:"ግባ",pw:"ምስጢር ቃል",name:"ስም",phone:"ስልክ",home:"ቡድኖች",empty:"ገና ምንም የለም።",set:"ቅንብሮች",lang:"ቋንቋ",notif:"ማሳወቂያ",prof:"መገለጫ",out:"ውጣ",slow:"🐢 ቀስ",norm:"⚡ መደበኛ",rec:"ቅዳ",stop:"አቁም",send:"ለአስተዳዳሪ ላክ",msg:"መልእክት",call:"ደውል",share:"አጋራ",subs:"የተላኩ",wrong:"ስህተት"},
+ti:{login:"እተው",pw:"ምስጢር ቃል",name:"ስም",phone:"ተሌፎን",home:"ጉጅለታት",empty:"ገና ዋላ የለን።",set:"ቅጥዕታት",lang:"ቋንቋ",notif:"መፍለጢ",prof:"መግለጺ",out:"ውጻእ",slow:"🐢 ቀስ",norm:"⚡ ንቡር",rec:"ቐድሕ",stop:"ደው",send:"ንአመሓዳሪ ስደድ",msg:"መልእኽቲ",call:"ደውል",share:"ኣጋራ",subs:"ዝተላኽዑ",wrong:"ጌጋ"},
+ar:{login:"دخول",pw:"كلمة السر",name:"الاسم",phone:"الهاتف",home:"المجموعات",empty:"لا شيء بعد.",set:"الإعدادات",lang:"اللغة",notif:"الإشعارات",prof:"الملف",out:"خروج",slow:"🐢 بطيء",norm:"⚡ عادي",rec:"تسجيل",stop:"إيقاف",send:"إرسال للمشرف",msg:"رسالة",call:"اتصل",share:"مشاركة",subs:"المرسل",wrong:"كلمة خاطئة"},
+de:{login:"Anmelden",pw:"Passwort",name:"Name",phone:"Telefon",home:"Gruppen",empty:"Noch nichts.",set:"Einstellungen",lang:"Sprache",notif:"Benachrichtigungen",prof:"Profil",out:"Abmelden",slow:"🐢 Langsam",norm:"⚡ Normal",rec:"Aufnehmen",stop:"Stopp",send:"An Admin senden",msg:"Nachricht",call:"Anrufen",share:"Teilen",subs:"Eingänge",wrong:"Falsch"}};
+const LN={sv:"Svenska",en:"English",am:"አማርኛ",ti:"ትግርኛ",ar:"العربية",de:"Deutsch"};
+const $=s=>document.querySelector(s),ls=(k,v)=>{try{if(v===undefined)return JSON.parse(localStorage.getItem(k));localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}};
+const sha=async s=>[...new Uint8Array(await crypto.subtle.digest("SHA-256",new TextEncoder().encode(s)))].map(b=>b.toString(16).padStart(2,"0")).join("");
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let S=ls("s")||{},P=ls("p")||{fav:{},read:{},place:{},hl:{}},nodes=[],subs=[],db=null,assets=null,path=[],view="home",menu=false,sel=new Set(),selMode=false;
+const T=k=>(L[S.lang]||L.sv)[k]||L.sv[k],A=()=>S.role==="a",save=()=>{ls("s",S);ls("p",P)};
+const toast=m=>{const d=document.createElement("div");d.className="toast";d.textContent=m;document.body.append(d);setTimeout(()=>d.remove(),2200)};
+const kids=(p,t)=>nodes.filter(n=>n.parent===p&&(!t||n.type===t)).sort((a,b)=>(a.order||0)-(b.order||0));
+const N=id=>nodes.find(n=>n.id===id);
+const col=()=>db&&db.collection("nodes");
+async function put(n){if(!A()){toast("Bara admin kan ändra");throw 0}const id=n.id||("n"+Date.now().toString(36)+Math.random().toString(36).slice(2,5));const {id:_,...d}=n;try{await col().doc(id).set({...(N(id)||{}),...d})}catch(e){toast("Kunde inte spara: "+(e&&(e.message||e.code)||e));throw e}}
+async function seed(){if(nodes.length||!db)return;const days=["ዘሰኑይ","ዘሰሉስ","ዘረቡዕ","ዘሓሙስ","ዘዓርብ","ዘቀሚት ሰንበት","ዘሰንበት"];await col().doc("g0").set({type:"g",parent:"",name:"ውዳሴ ማርያም",order:0});for(let i=0;i<7;i++)await col().doc("d"+i).set({type:"d",parent:"g0",name:days[i],order:i});["ጸሎተ ዘዘወትር","ኣንቀጸ ብርሃን","መልክኣ ማርያም","መልክኣ ኢየሱስ"].forEach((n,i)=>col().doc("g"+(i+1)).set({type:"g",parent:"",name:n,order:i+1}))}
+let LOCAL=false,ADM="";
+function localDb(){const g=n=>ls("L_"+n)||{},cbs={};const fire=n=>cbs[n]&&cbs[n]({docs:Object.entries(g(n)).map(([id,d])=>({id,data:()=>d}))});const w=(n,f)=>{const o=g(n);f(o);ls("L_"+n,o);fire(n)};return{collection:n=>({onSnapshot(cb){cbs[n]=cb;fire(n);return()=>{}},add:async d=>w(n,o=>{o["a"+Date.now()+Math.random().toString(36).slice(2,5)]=d}),doc:id=>({set:async d=>w(n,o=>{o[id]=d}),update:async d=>w(n,o=>{o[id]={...o[id],...d}}),delete:async()=>w(n,o=>{delete o[id]})})})}}
+const ADMIN_EMAIL="admin@wdase-mariam.app",USER_EMAIL="medlem@wdase-mariam.app";let FBR=null,SUBD=false,fbs=[];
+async function init(){try{const f=await window.FBREADY;db=f.db;assets=f.assets;FBR=f;const u=await f.user();if(u){S.role=u.email===ADMIN_EMAIL?"a":"u";if(S.role==="u"&&!S.uid)S.uid="u"+Date.now().toString(36);save();subscribe()}else if(S.role){S={lang:S.lang};save()}}catch(e){console.error(e);toast("Kunde inte ansluta till Firebase")}render()}
+function subscribe(){if(SUBD||!db)return;SUBD=true;const er=e=>toast("Databasfel: "+(e&&(e.message||e.code)||e));
+col().onSnapshot(s=>{nodes=s.docs.map(d=>({id:d.id,...d.data()}));if(A())seed();if(view!=="edit")render()},er);
+db.collection("meta").onSnapshot(s=>{const d=s.docs.find(x=>x.id==="admin");ADM=d?(d.data().phone||""):"";if(view==="x")render()},er);
+if(A())db.collection("subs").onSnapshot(s=>{subs=s.docs.map(d=>({id:d.id,...d.data()}));if(view==="subs")render()},er);
+else db.collection("fb").onSnapshot(s=>{fbs=s.docs.map(d=>({id:d.id,...d.data()}));if(view==="home")render()},er)}
+async function login(){const pw=$("#pw").value;if(!FBR)return toast("Ingen anslutning till Firebase");let role=null;
+try{await FBR.signIn(ADMIN_EMAIL,pw);role="a"}catch(e){try{await FBR.signIn(USER_EMAIL,pw);role="u"}catch(e2){return toast(e2&&e2.code==="auth/too-many-requests"?"För många försök, v\u00e4nta en stund":T("wrong"))}}
+if(role==="a")S={role:"a",name:"Admin",lang:S.lang||"sv",phone:S.phone||""};
+else{const n=$("#nm").value.trim(),p=$("#ph").value.trim();if(!n||!p){await FBR.signOut();return toast(T("name")+" + "+T("phone"))}S={role:"u",name:n,phone:p,lang:S.lang||"sv",uid:S.uid||"u"+Date.now().toString(36)}}
+save();path=[];view="home";subscribe();render()}
+const AC={};const sa=u=>u&&u.startsWith("fs:")?`data-fs="${esc(u)}"`:`src="${esc(u)}"`;
+async function loadAudio(el){const [,id,n,...m]=el.dataset.fs.split(":");if(AC[id]){el.src=AC[id];return}try{const ds=await Promise.all(Array.from({length:+n},(_,i)=>db.collection("aud").doc(id+"_"+i).get()));const bin=atob(ds.map(d=>d.data().d).join(""));const by=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)by[i]=bin.charCodeAt(i);AC[id]=URL.createObjectURL(new Blob([by],{type:m.join(":")}));el.src=AC[id]}catch(e){toast("Kunde inte ladda ljudet")}}
+async function doOut(){try{await FBR.signOut()}catch(e){}S={lang:S.lang};save();location.reload()}
+function title(){const n=N(path[path.length-1]);return n?n.name:T("home")}
+function go(id){path.push(id);view="x";menu=false;render();scrollTo(0,0)}
+function back(){if(view!=="x"||!path.length){view="home";path=[]}else path.pop();menu=false;render()}
+function topbar(){const cur=view==="x"&&path.length;return`<header>${cur||view!=="home"?'<button class="i" onclick="back()">‹</button>':""}<h1 class="ge">${esc(view==="set"?T("set"):view==="subs"?T("subs"):title())}</h1>${A()?`<button class="i" onclick="view='subs';render()" title="${T("subs")}">📥</button>`:""}${A()?'<button class="i" onclick="plus=!plus;menu=false;render()">➕</button>':""}<button class="i" onclick="view='set';render()">⚙️</button><button class="i" onclick="menu=!menu;plus=false;render()">⋮</button></header>${menu?menuHtml():""}${plus?plusHtml():""}`}
+function menuHtml(){const n=N(path[path.length-1]),t=n&&n.type,b=(l,f)=>`<button onclick="menu=false;${f}">${l}</button>`;let h="";
+if(A()){const add=!n?"g":n.type==="g"?"d":n.type==="d"?"t":"";if(add)h+=b("➕ "+{g:"Grupp",d:"Dag",t:"Text"}[add],`addNode('${add}')`);
+if(n)h+=b("✏️ Redigera",`editNode('${n.id}')`)+b("↕️ Flytta",`moveNode('${n.id}')`)+b("🗑️ Ta bort",`delNode('${n.id}')`);h+=b("☑️ Välj flera","selMode=!selMode;sel.clear();render()");if(sel.size)h+=b("🗑️ Ta bort valda ("+sel.size+")","delSel()")}
+else{if(n)h+=b("⭐ Favorit",`fav('${n.id}')`)+b("✅ Läst",`readM('${n.id}')`);if(t==="t")h+=b("✍️ Stryka under","hlMode=!hlMode;toast('Tryck på ett stycke')");h+=b("☑️ Välja flera","selMode=!selMode;sel.clear();render()")}
+if(n)h+=b("🔗 "+T("share"),`share('${n.id}')`);return`<div class="menu">${h}</div>`}
+let hlMode=false,plus=false,RP=null,markMode=false;
+const fav=id=>{P.fav[id]=!P.fav[id];save();render()},readM=id=>{P.read[id]=!P.read[id];save();render()};
+function share(id){const n=N(id),u=location.href.split("#")[0]+"#"+id;const d={title:n.name,text:n.name+"\n"+(n.body||"").slice(0,200),url:u};if(navigator.share)navigator.share(d).catch(()=>{});else{navigator.clipboard&&navigator.clipboard.writeText(u);toast("Länk kopierad")}}
+async function addNode(t){const nm=await ask("Namn på "+({g:"grupp",d:"dag",t:"text"}[t]));if(!nm)return;const par=t==="g"?"":path[path.length-1];const id="n"+Date.now().toString(36);await put({id,type:t,parent:par,name:nm,order:Date.now(),body:""});if(t==="t"){edId=id;view="edit";render()}}
+async function editNode(id){const n=N(id);if(n.type==="t"){view="edit";edId=id;render();return}const nm=await ask("Nytt namn",n.name);if(nm)put({id,name:nm})}
+async function delNode(id){if(!A())return;if(!await yn("Ta bort?"))return;const rm=async i=>{for(const k of kids(i))await rm(k.id);await col().doc(i).delete()};await rm(id);if(path[path.length-1]===id)back()}
+async function delSel(){if(!await yn("Ta bort "+sel.size+"?"))return;for(const i of sel)await delNode(i);sel.clear();selMode=false}
+async function moveNode(id){const n=N(id),sibs=kids(n.parent,n.type),i=sibs.findIndex(s=>s.id===id),d=await ask("Flytta: skriv upp, ner eller namnet på ny förälder (dag/grupp)");if(!d)return;
+if(d==="upp"&&i>0){await put({id,order:sibs[i-1].order-1})}else if(d==="ner"&&i<sibs.length-1){await put({id,order:sibs[i+1].order+1})}else{const tt=nodes.find(x=>x.name===d&&((n.type==="t"&&x.type==="d")||(n.type==="d"&&x.type==="g")));if(tt){await put({id,parent:tt.id});back()}else toast("Hittades inte")}}
+let edId=null;
+function plusHtml(){const n=N(path[path.length-1]),b=(l,f)=>`<button onclick="plus=false;${f}">${l}</button>`;let h="";
+if(view==="x"&&n&&n.type==="t")h=b("📝 Lägg till / ändra text",`editNode('${n.id}')`)+b("🖼️ Lägg till bild",`editNode('${n.id}')`)+b("🐢 Spela in ljud – segt",`openRec('${n.id}','slow')`)+b("⚡ Spela in ljud – normalt",`openRec('${n.id}','normal')`)+b("📖 Markera läs härifrån","markMode=true;toast('Tryck på ett stycke i texten');render()");
+else if(view==="x"&&n&&n.type==="d")h=b("📝 Lägg till text","addNode('t')");
+else if(view==="x"&&n&&n.type==="g")h=b("➕ Lägg till dag","addNode('d')");
+else h=b("➕ Lägg till grupp","addNode('g')");
+return`<div class="menu">${h}</div>`}
+function ask(msg,def,yes){return new Promise(r=>{const d=document.createElement("div");d.className="sheet";d.style.zIndex=30;d.innerHTML=`<b>${esc(msg)}</b>${yes?"":`<input id="ai" value="${esc(def||"")}">`}<div class="row"><button id="ao">OK</button><button class="g" id="ac">Avbryt</button></div>`;document.body.append(d);const i=d.querySelector("#ai");if(i)i.focus();const f=v=>{d.remove();r(v)};d.querySelector("#ao").onclick=()=>f(yes?true:(i.value.trim()||null));d.querySelector("#ac").onclick=()=>f(yes?false:null);if(i)i.onkeydown=e=>{if(e.key==="Enter")f(i.value.trim()||null)}})}
+const yn=m=>ask(m,"",1);
+function openRec(id,k){RP={id,k,st:"idle"};render()}
+async function rpStart(){try{const st=await navigator.mediaDevices.getUserMedia({audio:true});mr=new MediaRecorder(st,{audioBitsPerSecond:32000});ch=[];mr.ondataavailable=e=>ch.push(e.data);mr.onstop=()=>{st.getTracks().forEach(t=>t.stop());RP.blob=new Blob(ch,{type:mr.mimeType||"audio/webm"});RP.url=URL.createObjectURL(RP.blob);RP.st="done";render()};mr.start();RP.st="rec";render()}catch(e){toast("Mikrofon nekad: "+(e&&e.name||e))}}
+function rpStop(){mr&&mr.stop()}
+async function rpSave(){try{toast("Laddar upp…");const u=await upl(RP.blob);await put({id:RP.id,[RP.k]:u});toast("Sparad ✔");RP=null;render()}catch(e){toast("Uppladdning misslyckades")}}
+function recHtml(){if(!RP)return"";const t=RP.k==="slow"?T("slow"):T("norm");const c=RP.st==="idle"?`<button onclick="rpStart()">● Starta inspelning</button>`:RP.st==="rec"?`<b style="color:#c00">● Spelar in…</b> <button onclick="rpStop()">■ Stoppa</button>`:`<audio controls src="${RP.url}" style="width:100%"></audio><button onclick="rpSave()">Spara</button><button class="g" onclick="rpStart()">Gör om</button>`;
+return`<div class="sheet"><b>🎙️ ${t}</b><div class="row">${c}</div><button class="g" onclick="RP=null;render()">Avbryt</button></div>`}
+function editView(){const n=N(edId)||{name:"",body:""};return`<div class="card"><input id="et" value="${esc(n.name)}"><div class="row"><button class="g" onclick="fmt('**')"><b>B</b></button><button class="g" onclick="fmt('_')"><i>I</i></button><button class="g" onclick="fmt('# ','l')">H</button><button class="g" onclick="fmt('• ','l')">•</button><button class="g" onclick="$('#im').click()">🖼️</button><input id="im" type="file" accept="image/*" hidden onchange="addImg(this)"></div><textarea id="eb" class="ge" rows="14">${esc(n.body)}</textarea><div class="row"><button onclick="saveEd()">Spara</button><button class="g" onclick="view='x';render()">Avbryt</button></div><p class="sub">Tips: en rad = ett stycke (läsmarkering sätts per stycke).</p></div>`}
+function fmt(m,l){const e=$("#eb"),a=e.selectionStart,b=e.selectionEnd,v=e.value;e.value=l?v.slice(0,a)+m+v.slice(a):v.slice(0,a)+m+v.slice(a,b)+m+v.slice(b);e.focus()}
+async function addImg(i){const f=i.files[0];if(!f)return;try{const r={url:await upl(f)};$("#eb").value+="\n![bild]("+r.url+")\n"}catch(e){toast("Kunde inte ladda upp")}}
+async function saveEd(){await put({id:edId,name:$("#et").value,body:$("#eb").value});view="x";render()}
+function fmtLine(s){let m=s.match(/^!\[.*?\]\((.+?)\)$/);if(m)return`<img src="${esc(m[1])}" style="max-width:100%;border-radius:10px">`;s=esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>").replace(/_(.+?)_/g,"<i>$1</i>");if(/^# /.test(s))return"<b style='font-size:1.15em'>"+s.slice(2)+"</b>";return s||"&nbsp;"}
+function readView(n){const lines=(n.body||"").split("\n"),mk=n.mark,pl=P.place[n.id],hl=P.hl[n.id]||{};
+const body=lines.map((l,i)=>`<p data-i="${i}" class="${i===mk?"mk":""} ${i===pl?"pl":""} ${hl[i]?"hl":""}" onclick="tapLine(${i})">${i===mk?"📖 ":""}${fmtLine(l)}</p>`).join("");
+const au=(k,l)=>n[k]?`<div class="row"><span class="sub">${l}</span><audio controls ${sa(n[k])} style="flex:1;min-width:200px"></audio></div>`:"";
+return`<div id="body" class="ge">${body||T("empty")}</div><div class="card"><div class="sub">🎧</div>${au("slow",T("slow"))}${au("normal",T("norm"))}${A()?`<div class="row"><button class="g" onclick="openRec('${n.id}','slow')">🎙️ ${T("slow")}</button><button class="g" onclick="openRec('${n.id}','normal')">🎙️ ${T("norm")}</button></div>`:""}</div>${A()?`<div class="sub">Admin: använd ➕ för att lägga till text, spela in ljud eller sätta markering.</div>`:`<div class="card"><b>✉️ ${T("send")}</b><div class="row"><button id="rb" class="g" onclick="recSub('${n.id}')">🎙️ ${T("rec")}</button><span id="rs" class="sub"></span></div><textarea id="sm" rows="2" placeholder="${T("msg")}"></textarea><div class="row"><button onclick="sendSub('${n.id}')">${T("send")}</button>${ADM?`<a href="tel:${esc(ADM)}" style="text-decoration:none"><button class="g">📞 ${T("call")}</button></a>`:'<span class="sub">Admin har inte lagt in något telefonnummer ännu</span>'}</div></div>`}`}
+function tapLine(i){const n=N(path[path.length-1]);if(!n||n.type!=="t")return;if(A()){if(markMode){markMode=false;put({id:n.id,mark:n.mark===i?-1:i})}else toast("Använd ➕ → Markera")}else if(hlMode){const h=P.hl[n.id]=P.hl[n.id]||{};h[i]=!h[i];save();render()}else{P.place[n.id]=i;save();render()}}
+let mr=null,ch=[],subBlob=null;
+async function rec(done,btn){if(mr&&mr.state==="recording"){mr.stop();return}try{const st=await navigator.mediaDevices.getUserMedia({audio:true});mr=new MediaRecorder(st,{audioBitsPerSecond:32000});ch=[];mr.ondataavailable=e=>ch.push(e.data);mr.onstop=()=>{st.getTracks().forEach(t=>t.stop());done(new Blob(ch,{type:mr.mimeType||"audio/webm"}))};mr.start();toast("● "+T("stop"))}catch(e){toast("Mikrofon nekad")}}
+async function upl(b){if(assets)return (await assets.upload(b)).url;return await new Promise((r,j)=>{const f=new FileReader();f.onload=()=>r(f.result);f.onerror=j;f.readAsDataURL(b)})}
+function recFor(id,k){rec(async b=>{try{toast("Laddar upp…");await put({id,[k]:await upl(b)});toast("Sparad")}catch(e){toast("Uppladdning kräver redigerarbehörighet")}})}
+function recSub(id){rec(b=>{subBlob=b;$("#rs").textContent="✔ inspelad"})}
+async function sendSub(tid){const m=$("#sm").value.trim();if(!subBlob&&!m)return;let a="";try{if(subBlob)a=await upl(subBlob)}catch(e){toast("Kunde inte ladda upp ljud")}
+const id="s"+Date.now().toString(36)+Math.random().toString(36).slice(2,5),base={uid:S.uid,text:N(tid).name,status:"ny"};await db.collection("subs").doc(id).set({...base,tid,name:S.name,phone:S.phone,audio:a,msg:m,at:Date.now()});await db.collection("fb").doc(id).set(base);subBlob=null;toast("Skickat ✔");render()}
+function subsView(){if(!subs.length)return`<p class="sub">${T("empty")}</p>`;return subs.sort((a,b)=>b.at-a.at).map(s=>`<div class="card"><b>${esc(s.name)}</b> · <a href="tel:${esc(s.phone)}">${esc(s.phone)}</a><div class="sub ge">${esc(s.text)} · ${new Date(s.at).toLocaleDateString()} <span class="tag">${esc(s.status)}</span> ${esc(s.emoji||"")}</div>${s.msg?`<p>${esc(s.msg)}</p>`:""}${s.audio?`<audio controls ${sa(s.audio)} style="width:100%"></audio>`:""}${s.comment?`<p>💬 ${esc(s.comment)}</p>`:""}${s.deadline?`<p>⏰ ${esc(s.deadline)}</p>`:""}<div class="row"><button class="g" onclick="cm('${s.id}')">💬</button><button class="g" onclick="em('${s.id}')">😀</button><button class="g" onclick="dl('${s.id}')">⏰</button><button class="g" onclick="rs('${s.id}')">🔁</button></div></div>`).join("")}
+const up=async(id,d)=>{await db.collection("subs").doc(id).update(d);await db.collection("fb").doc(id).update(d)};
+const cm=async id=>{const c=await ask("Kommentar / rekommendation");if(c)up(id,{comment:c})},em=async id=>{const e=await ask("Emoji","👍");if(e)up(id,{emoji:e})},dl=async id=>{const d=await ask("Deadline (ÅÅÅÅ-MM-DD)");if(d)up(id,{deadline:d})},rs=id=>up(id,{status:"spela in igen"});
+function listView(p,type){const ks=kids(p,type);if(!ks.length)return`<p class="sub">${T("empty")}</p>`;return ks.map(n=>`<div class="item" onclick="${selMode?`tg('${n.id}')`:`go('${n.id}')`}">${selMode?`<span>${sel.has(n.id)?"☑️":"⬜"}</span>`:""}<span class="n ge">${esc(n.name)}</span>${P.fav[n.id]?"⭐":""}${P.read[n.id]?"✅":""}<span class="sub">›</span></div>`).join("")}
+const tg=id=>{sel.has(id)?sel.delete(id):sel.add(id);render()};
+function setView(){return`<div class="card"><b>${T("lang")}</b><select onchange="S.lang=this.value;save();render()">${Object.keys(LN).map(k=>`<option value="${k}" ${S.lang===k?"selected":""}>${LN[k]}</option>`).join("")}</select><p class="sub">Gränssnittet byts, texterna förblir Ge'ez/amhariska.</p></div>
+<div class="card"><b>${T("notif")}</b><label class="row"><input type="checkbox" style="width:auto" ${S.notif!==false?"checked":""} onchange="S.notif=this.checked;save()"> Dagliga påminnelser &amp; deadlines (visas i appen)</label></div>
+<div class="card"><b>${T("prof")}</b><input value="${esc(S.name)}" onchange="S.name=this.value;save()" placeholder="${T("name")}"><input value="${esc(S.phone)}" onchange="S.phone=this.value;save()" placeholder="${T("phone")}">${A()?`<p class="sub">Admin: ditt nummer visas för användare via "Ring admin".</p><button class="g" onclick="setAP()">📞 Sätt admin-nummer</button>`:""}</div><button class="g" onclick="doOut()">${T("out")}</button>`}
+async function setAP(){const p=await ask("Ditt telefonnummer som användarna ringer",S.phone||ADM||"");if(!p)return;S.phone=p;save();try{await db.collection("meta").doc("admin").set({phone:p});toast("Sparat ✔")}catch(e){toast("Kunde inte spara: "+(e&&(e.message||e.code)||e))}}
+function banner(){if(S.notif===false||A())return"";const mine=fbs.filter(s=>s.uid===S.uid);let h="";mine.forEach(s=>{if(s.comment)h+=`<div class="card">💬 ${esc(s.text)}: ${esc(s.comment)} ${esc(s.emoji||"")}</div>`;if(s.deadline)h+=`<div class="card">⏰ ${esc(s.text)} → ${esc(s.deadline)}</div>`;if(s.status==="spela in igen")h+=`<div class="card">🔁 Spela in igen: ${esc(s.text)}</div>`});return h}
+function render(){const a=$("#app");if(!S.role){a.innerHTML=`<div class="login"><h2>🕊️ ውዳሴ ማርያም</h2><input id="pw" type="password" placeholder="${T("pw")}" autocomplete="off"><input id="nm" placeholder="${T("name")}"><input id="ph" type="tel" placeholder="${T("phone")}"><button style="width:100%" onclick="login()">${T("login")}</button><p class="sub">${T("name")} + ${T("phone")}: ${T("prof")}</p></div>`;return}
+let h=topbar()+(LOCAL?'<div class="card sub">⚠️ Sparas bara på den här enheten (ingen delad databas hittades).</div>':"");const n=N(path[path.length-1]);
+if(view==="set")h+=setView();else if(view==="subs"&&A())h+=subsView();else if(view==="edit")h+=editView();
+else if(!db)h+=`<p class="card">Öppna sidan via din delade länk och logga in på claude.ai för att se innehållet.</p>`;
+else if(view==="home"||!path.length)h+=banner()+listView("","g");
+else if(n&&n.type==="g")h+=listView(n.id,"d");else if(n&&n.type==="d")h+=listView(n.id,"t");else if(n)h+=readView(n);
+if(RP)h+=recHtml();a.innerHTML=h;document.querySelectorAll("audio[data-fs]").forEach(loadAudio);
+if(view==="x"&&n&&n.type==="t"&&P.place[n.id]!=null&&!A()){const e=document.querySelector(`[data-i="${P.place[n.id]}"]`);e&&!window._sc&&(window._sc=1,e.scrollIntoView({block:"center"}),setTimeout(()=>window._sc=0,500))}}
+if(!S.adminPhone)S.adminPhone="";
+window.addEventListener("hashchange",()=>{const id=location.hash.slice(1);if(N(id)){path=[];let c=N(id);while(c){path.unshift(c.id);c=N(c.parent)}view="x";render()}});
+render();init();
+</script></body></html>
